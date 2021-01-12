@@ -69,16 +69,16 @@ int AVLTree::getFE(Node *node)
 
 Node *AVLTree::leftRotation(Node *node)
 {
-	Node *node_aux = node->right;											// step 1: get the right side subtree;
+	Node *node_aux = node->right;							// step 1: get the right side subtree;
 	
-	node_aux->parent = node->parent;										// step 2: change parents
-    node->parent = node_aux;
+	node_aux->parent = node->parent;						// step 2: change parents
+    	node->parent = node_aux;
     
-	node->right = node_aux->left;											// step 3: change nodes
-    node_aux->left = node;
+	node->right = node_aux->left;							// step 3: change nodes
+    	node_aux->left = node;
     
-    node->FE = max(getFE(node->left), getFE(node->right)) +1;				// step 4: get max FE + 1
-    node_aux->FE = max(getFE(node_aux->left), getFE(node_aux->right)) +1;
+    	node->FE = max(getFE(node->left), getFE(node->right)) +1;			// step 4: get max FE + 1
+    	node_aux->FE = max(getFE(node_aux->left), getFE(node_aux->right)) +1;
 	
 	return node_aux;
 }
@@ -86,17 +86,17 @@ Node *AVLTree::leftRotation(Node *node)
 Node *AVLTree::rightRotation(Node *node)
 {
 	Node *node_aux = node->left;					//   example: 4   node = 3  step 1: node_aux = 2  step 2:  node_aux->parent = 4
-													//           /          /                     /            node->parent = 2
+									//           /          /                     /            node->parent = 2
 	node_aux->parent = node->parent;				//          3          2                     1
-	node->parent = node_aux;						//         /          /
-													//        2	         1      step 3: node_aux = 2
-    node->left = node_aux->right;					//       /                                    / \.
-    node_aux->right = node;							//      1                                    1   3
+	node->parent = node_aux;					//         /          /
+									//        2	     1      step 3: node_aux = 2
+    	node->left = node_aux->right;					//       /                                    / \.
+    	node_aux->right = node;						//      1                                    1   3
     
-    node->FE = max(getFE(node->left), getFE(node->right)) +1;
-    node_aux->FE = max(getFE(node_aux->left), getFE(node_aux->right)) +1;
+    	node->FE = max(getFE(node->left), getFE(node->right)) +1;
+    	node_aux->FE = max(getFE(node_aux->left), getFE(node_aux->right)) +1;
     
-    return node_aux;
+    	return node_aux;
 }
 
 Node *AVLTree::doubleRotation_left(Node *node)
@@ -104,7 +104,7 @@ Node *AVLTree::doubleRotation_left(Node *node)
 	Node *node_aux;
 	
 	node->right = rightRotation(node->right);			// overwrite subTree on the right side with right rotation
-	node_aux = leftRotation(node);						// rotate the whole node with left rotation 
+	node_aux = leftRotation(node);					// rotate the whole node with left rotation 
 	
 	return node_aux;
 }
@@ -132,40 +132,40 @@ Node *AVLTree::createNode(int number)
 
 Node *AVLTree::insertAVL(Node *newNode, Node *tree) 
 {
-	if (tree == NULL) {										// insert into empty node
+	if (tree == NULL) {							// insert into empty node
 		cout<<"\n\n\t"<< newNode->data<< " Added\n"<< endl;
-        return newNode;
-    }
+        	return newNode;
+    	}
     
-    if (newNode->data < tree->data) {						// keep iterating on the left side
-    	newNode->parent = tree;								// set parent
-    	tree->left = insertAVL(newNode, tree->left);	
+    	if (newNode->data < tree->data) {					// keep iterating on the left side
+    		newNode->parent = tree;						// set parent
+    		tree->left = insertAVL(newNode, tree->left);	
 	} else if (newNode->data > tree->data) {				// keep iterating on the right side
 		newNode->parent = tree;
-    	tree->right = insertAVL(newNode, tree->right);
+    		tree->right = insertAVL(newNode, tree->right);
 	} else {
-    	cout<< "\n\n\tDuplicate item\n"<< endl;
+    		cout<< "\n\n\tDuplicate item\n"<< endl;
 	}
 	
-    tree->FE = max(getFE(tree->left), getFE(tree->right)) +1;			// recalculate FE of parent 
-    int balance = getFE(tree->left) - getFE(tree->right);				// get balance
+    	tree->FE = max(getFE(tree->left), getFE(tree->right)) +1;		// recalculate FE of parent 
+    	int balance = getFE(tree->left) - getFE(tree->right);			// get balance
     
-    // balance
-    if (balance > 1) {
-        if (newNode->data < tree->left->data) {
-            return rightRotation(tree);
-        } else {
-            return doubleRotation_right(tree);
-        }
-    } else if (balance < -1) {
-        if (newNode->data > tree->right->data) {
-            return leftRotation(tree);
-        } else {
-            return doubleRotation_left(tree);
-        }
-    }
+    	// balance
+    	if (balance > 1) {
+        	if (newNode->data < tree->left->data) {
+            		return rightRotation(tree);
+        	} else {
+            		return doubleRotation_right(tree);
+        	}
+    	} else if (balance < -1) {
+        	if (newNode->data > tree->right->data) {
+            		return leftRotation(tree);
+        	} else {
+            		return doubleRotation_left(tree);
+        	}
+    	}
     
-    return tree;
+    	return tree;
 }
 
 void AVLTree::insert(int value)
@@ -177,58 +177,58 @@ void AVLTree::insert(int value)
 
 Node *AVLTree::removeAVL(Node *tree, int value)
 {
-    if (tree == NULL) {									// tree end and element no found
-    	return NULL;	
+    	if (tree == NULL) {								// tree end and element no found
+    		return NULL;	
 	} 
 	
-    if (value < tree->data) {							// keep iterating on the the left side
-        tree->left = removeAVL(tree->left, value);
-    } else if (value > tree->data) {					// keep iterating on the the left side
-        tree->right = removeAVL(tree->right, value);
-    } else {
-        Node *right_aux = tree->right;
+    	if (value < tree->data) {							// keep iterating on the the left side
+        	tree->left = removeAVL(tree->left, value);
+    	} else if (value > tree->data) {						// keep iterating on the the left side
+        	tree->right = removeAVL(tree->right, value);
+    	} else {
+        	Node *right_aux = tree->right;
         
-    	if (tree->right == NULL) {
-        	Node *left_aux = tree->left;
-        	delete(tree);
-        	tree = left_aux;
-    	} else if (tree->left == NULL) {
-            delete(tree);
-            tree = right_aux;
-        } else {
+    		if (tree->right == NULL) {
+        		Node *left_aux = tree->left;
+        		delete(tree);
+        		tree = left_aux;
+    		} else if (tree->left == NULL) {
+            		delete(tree);
+            		tree = right_aux;
+        	} else {
         	
-            while(right_aux->left != NULL) {
-            	right_aux = right_aux->left;						// in these cases it's when the node have 2 children
+           	 	while (right_aux->left != NULL) {
+            			right_aux = right_aux->left;			// in these cases it's when the node have 2 children
 			}
 			
-            tree->data = right_aux->data;							// overwrite data
-            tree->right = removeAVL(tree->right, right_aux->data);  // overwrite this subTree find successor
-        } 
-    }
+            		tree->data = right_aux->data;				// overwrite data
+            		tree->right = removeAVL(tree->right, right_aux->data);  // overwrite this subTree find successor
+        	} 
+    	}
     
-    if (tree == NULL) { 											// successor found
+    	if (tree == NULL) { 							// successor found
 		return tree;
 	}
 	 
-    tree->FE = max(getFE(tree->left), getFE(tree->right)) +1;		// recalculate FE of parent 
-    int balance = getFE(tree->left) - getFE(tree->right);			// get balance
+    	tree->FE = max(getFE(tree->left), getFE(tree->right)) +1;		// recalculate FE of parent 
+    	int balance = getFE(tree->left) - getFE(tree->right);			// get balance
     
-    // balance
-    if (balance > 1) {
-        if (value > tree->left->data) {
-            return rightRotation(tree);
-        } else {
-            return doubleRotation_right(tree);
-        }
-    } else if (balance < -1) {
-        if (value < tree->right->data) {
-            return leftRotation(tree);
-        } else {
-            return doubleRotation_left(tree);
-        }
-    }
+    	// balance
+    	if (balance > 1) {
+        	if (value > tree->left->data) {
+            		return rightRotation(tree);
+        	} else {
+            		return doubleRotation_right(tree);
+        	}
+    	} else if (balance < -1) {
+        	if (value < tree->right->data) {
+            		return leftRotation(tree);
+        	} else {
+            		return doubleRotation_left(tree);
+        	}
+    	}
     
-    return tree;
+    	return tree;
 }
 
 void AVLTree::remove(int value) 
@@ -288,7 +288,7 @@ void AVLTree::searchNodeAVL(Node *tree, int value, int count)
 	} else if (value < tree->data) { 				// keep searching on the left side
 		searchNodeAVL(tree->left, value, count+1);
 	} else {
-		searchNodeAVL(tree->right, value, count+1); // keep searching on the right side
+		searchNodeAVL(tree->right, value, count+1); 		// keep searching on the right side
 	}
 }
 
@@ -304,9 +304,9 @@ Node *AVLTree::getMinNode(Node *tree)
 	} 
 	
 	if (tree->left != NULL) {
-		return getMinNode(tree->left);	// search on the left side
+		return getMinNode(tree->left);		// search on the left side
 	} else {
-		return tree; 					// min node found
+		return tree; 				// min node found
 	}
 }
 
@@ -322,9 +322,9 @@ Node *AVLTree::getMaxNode(Node *tree)
 	} 
 	
 	if (tree->right != NULL) { 
-		return getMaxNode(tree->right);	// search on the right side
+		return getMaxNode(tree->right);		// search on the right side
 	} else {
-		return tree; 					// max node found
+		return tree; 				// max node found
 	}
 }
 
@@ -335,7 +335,7 @@ int AVLTree::maxValue()
 
 Node *AVLTree::getPredecessor(Node *node)
 {
-	if (node == NULL) {							// end tree
+	if (node == NULL) {					// end tree
 		return NULL;
 	} 
 	
@@ -345,9 +345,9 @@ Node *AVLTree::getPredecessor(Node *node)
 	
 	Node *aux = node->parent;
 	
-	while (aux != NULL && node == aux->left) {	// search predecessor
+	while (aux != NULL && node == aux->left) {		// search predecessor
 		node = aux;
-		aux = aux->parent; 						// update parent
+		aux = aux->parent; 				// update parent
 	}
 	
 	return aux;
@@ -355,19 +355,19 @@ Node *AVLTree::getPredecessor(Node *node)
 
 Node *AVLTree::getSuccessor(Node *node)
 {
-	if (node == NULL) { 							// end tree
+	if (node == NULL) { 					// end tree
 		return NULL;
 	} 
 	
 	if (node->right != NULL) {
-		return getMinNode(node->right); 			// search on the right side
+		return getMinNode(node->right); 		// search on the right side
 	}
 	
 	Node *aux = node->parent;
 	
-	while (aux != NULL && node == aux->right) { 	// search sucessor
+	while (aux != NULL && node == aux->right) { 		// search sucessor
 		node = aux;
-		aux = aux->parent; 							// update parent
+		aux = aux->parent; 				// update parent
 	}
 	
 	return aux;
@@ -406,7 +406,7 @@ void AVLTree::preOrderAVL(Node *tree)
 	if (tree == NULL) { 				// tree end
 		return;
 	} else { 
-		cout<< tree->data << " - "; 	// print node
+		cout<< tree->data << " - "; 		// print node
 		preOrderAVL(tree->left); 		// go to the left on each node
 		preOrderAVL(tree->right); 		// go to the right on each node
 	}
@@ -423,7 +423,7 @@ void AVLTree::inOrderAVL(Node *tree)
 		return;
 	} else {
 		inOrderAVL(tree->left); 		// go to the left on each node
-		cout<< tree->data << " - "; 	// print node
+		cout<< tree->data << " - "; 		// print node
 		inOrderAVL(tree->right); 		// go to the right on each node
 	}
 }
@@ -440,7 +440,7 @@ void AVLTree::postOrderAVL(Node *tree)
 	} else {
 		postOrderAVL(tree->left); 		// go to the left on each node
 		postOrderAVL(tree->right); 		// go to the right on each node
-		cout<< tree->data << " - "; 	// print node
+		cout<< tree->data << " - "; 		// print node
 	}
 }
 
@@ -451,15 +451,15 @@ void AVLTree::postOrder()
 
 void AVLTree::printAVLTree(Node *tree, int count)
 {
-	if (tree == NULL) {							// tree end
+	if (tree == NULL) {				// tree end
 		return;
-	} else { 									// if you have more than 1 nodes in your tree
+	} else { 					// if you have more than 1 nodes in your tree
 		printAVLTree(tree->right, count+1); 	// go to the right on each node
 		for (int i = 0; i < count; i++) {
-			cout<< "   ";						// print spaces this is stetic
+			cout<< "   ";			// print spaces this is stetic
 		}
-		cout<< tree->data<< endl; 				// print node
-		printAVLTree(tree->left, count+1); 		// go to the left on each node
+		cout<< tree->data<< endl; 		// print node
+		printAVLTree(tree->left, count+1); 	// go to the left on each node
 	}
 }
 
@@ -481,8 +481,7 @@ int main()
 	int option;
 	int number;
 	
-	do
-	{
+	do {
 		cout<< "\t AVL Trees\n"<< endl;
 		cout<< "\t.::MENU::.\n"<< endl;
 		cout<< " [1] Insert node"<< endl;
