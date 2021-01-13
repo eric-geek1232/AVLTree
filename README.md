@@ -26,3 +26,43 @@ c++, Full AVLTree. OPP
  [10] quit
 
  Choose:
+ 
+ # final results
+ 
+          Showing tree...
+
+
+         15
+         
+      14
+      
+         13
+         
+   12
+   
+         11
+         
+      10
+      
+         9
+         
+8
+
+         7
+         
+      6
+      
+         5
+   4
+   
+         3
+         
+      2
+      
+         1
+
+
+
+ Depth: 4
+
+ Weight: 15
